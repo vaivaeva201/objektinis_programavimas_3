@@ -11,25 +11,38 @@ class Vector {
         using size_type = std::size_t;
 
         //default construktor
-        Vector() : size_(0), capacity_(1) {data_(new T[capacity_]);}
+        Vector() : size_(0), capacity_(1) {data_ = new T[capacity_];}
         
         //copy construcotr
         Vector(const Vector& rhs) : size_(rhs.size_), capacity_(rhs.capacity_) 
         {
-            data_(new T[capacity_]);
+            data_ = new T[capacity_];
             for (int i = 0; i < rhs.size(); i++)
             {
                 data_[i] = rhs.data_[i];
             }
         }    
-        //????
+        //???
         Vector(int elements, int value = 0) : size_(elements), capacity_(elements)
         {
-            data_(new T[capacity_])
+            data_ = new T[capacity_];
             for(int i = 0; i < size_; i++)
             {
                 data_[i] = value;
             }
+        }
+
+        //list construktor
+        Vector(std::initializer_list<T>& list) : size_(0), capacity_(list.size())
+        {
+            data_ = new T[capacity_];
+
+            size_t i = 0;
+            for (const T& value : list) 
+                {
+                    data_[i] = value;
+                    i++;
+                }
         }
 
         //destructor
@@ -64,9 +77,25 @@ class Vector {
 
         void push_back(const T& value)
         {
+            if(size_ < capacity_)
+            {
+                data_[size_] = value;
+                size_++;
+            }
+            else
+            {
+                capacity_ = (capacity_ == 0) ? 1 : capacity_ * 2;
+                T *newdata_ = new T[capacity_];
+                for (size_t i = 0; i < size_; i++)
+                {
+                    newdata_[i] = data_[i];
+                }
+                newdata_[size_] = value;
+                size_++;
+                delete[] data_;
+                data_ = newdata_;
+            }
 
-            data_[size_] = value;
-            size_++;
         }
 
         //operators
@@ -93,6 +122,19 @@ class Vector {
             return !(*this == rhs);
         }
 
+        friend std:: ostream& operator<<(std::ostream& out, const Vector& rhs)
+        {
+            for (int i = 0; i < rhs.size_; i++)
+            {
+                out << rhs.data_[i] << " ";
+            }
+            out << " || ";
 
-
+            for (int i = rhs.size_; i < rhs.capacity_; i++)
+            {
+                out << rhs.data_[i] << " ";
+            }
+            out << std::endl;
+            return out;
+        }
 };
