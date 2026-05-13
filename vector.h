@@ -10,21 +10,34 @@ class Vector {
     public:
         using size_type = std::size_t;
 
-        Vector() : size_(0), capacity_(0) data_(new T[capacity_]) { }
+        //default construktor
+        Vector() : size_(0), capacity_(1) {data_(new T[capacity_]);}
+        
+        //copy construcotr
+        Vector(const Vector& rhs) : size_(rhs.size_), capacity_(rhs.capacity_) 
+        {
+            data_(new T[capacity_]);
+            for (int i = 0; i < rhs.size(); i++)
+            {
+                data_[i] = rhs.data_[i];
+            }
+        }    
+        //????
+        Vector(int elements, int value = 0) : size_(elements), capacity_(elements)
+        {
+            data_(new T[capacity_])
+            for(int i = 0; i < size_; i++)
+            {
+                data_[i] = value;
+            }
+        }
 
+        //destructor
         ~Vector(){
             delete[] data_;
         }
 
-
-
-        void push_back(const T& value)
-        {
-
-            data_[size_] = value;
-            size_++;
-        }
-
+        //dytis, talpa
         bool emty() const
         {
             return size_ == 0;
@@ -41,6 +54,7 @@ class Vector {
             return capacity_;
         }
 
+        //elementu pridejimas, salinimas
         void clear(){
             size_ = 0;
             capacity_ = 0;
@@ -48,7 +62,15 @@ class Vector {
             data_ = nullptr;
         }
 
-        bool operator== (const Vector& rhs) const
+        void push_back(const T& value)
+        {
+
+            data_[size_] = value;
+            size_++;
+        }
+
+        //operators
+        bool operator==(const Vector& rhs) const
         {
             if(size() != rhs.size())
             {
@@ -66,7 +88,7 @@ class Vector {
             return true;
         }
 
-        bool operator!= (const Vector& rhs) const
+        bool operator!=(const Vector& rhs) const
         {
             return !(*this == rhs);
         }
