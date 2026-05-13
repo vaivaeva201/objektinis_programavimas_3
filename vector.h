@@ -64,16 +64,14 @@ class Vector {
         }
 
         //list construktor
-        Vector(std::initializer_list<T>& list) : size_(list.size()), capacity_(list.size())
+        Vector(std::initializer_list<T> list) : size_(list.size()), capacity_(list.size()) 
         {
             data_ = new T[capacity_];
-
             size_t i = 0;
-            for (const T& value : list) 
-                {
-                    data_[i] = value;
-                    i++;
-                }
+            for (const auto& item : list) 
+            {
+                data_[i++] = item;
+            }
         }
 
         //destructor
@@ -82,7 +80,7 @@ class Vector {
         }
 
         //dytis, talpa
-        bool emty() const
+        bool empty() const
         {
             return size_ == 0;
         }
@@ -260,6 +258,17 @@ class Vector {
                 data_[i] = std::move(data_[i + 1]);
             }
             size_--;
+        }
+
+        //iteratoriai
+        T* begin()
+        {
+            return data_;
+        }
+
+        T* end()
+        {
+            return data_ + size_;
         }
 
         //operators
