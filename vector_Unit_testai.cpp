@@ -182,3 +182,75 @@ TEST_CASE("prieiga prie elementu", "[Vector]")
         REQUIRE(ptr[3] == 4);
     }
 }
+
+TEST_CASE("elementu pridejimas, salinimas", "[Vector]") 
+{
+    SECTION("clear")
+    {
+        Vector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.clear();
+
+        REQUIRE(v.size() == 0);
+        REQUIRE(v.capacity() == 0);
+    }
+
+    SECTION("push_back")
+    {
+        Vector<int> v;
+        v.push_back(2);
+
+        REQUIRE(v.size() == 1);
+        REQUIRE(v.at(0) == 2);
+    }
+
+    SECTION("pop_back")
+    {
+        Vector<int> v;
+        v.push_back(1);
+        v.push_back(2);
+        v.pop_back();
+
+        REQUIRE(v.size() == 1);
+        REQUIRE(v.at(0) == 1);
+    }
+
+    SECTION("insert")
+    {
+        
+    }
+
+    SECTION("erase")
+    {
+        
+    }
+}
+
+TEST_CASE("iteratoriai", "[Vector]") 
+{
+
+    SECTION("begin")
+    {
+        
+    }
+
+    SECTION("end")
+    {
+        
+    }
+}
+
+TEST_CASE("operatoriai", "[Vector]") 
+{
+    SECTION("operator ==")
+    {
+        
+    }
+
+    SECTION("operator !=")
+    {
+        
+    }
+
+}
