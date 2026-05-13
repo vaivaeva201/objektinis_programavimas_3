@@ -119,5 +119,15 @@ TEST_CASE("dydis/talpa", "[Vector]")
         REQUIRE(v.capacity() == oldCap + 10);
     }
 
-    
+    SECTION("shrink_to_fit")
+    {
+        for (int i = 0; i < 5; ++i) 
+        {
+            v.push_back(i);
+        }
+        v.reserve(100);
+        REQUIRE(v.capacity() >= 100);
+        v.shrink_to_fit();
+        REQUIRE(v.capacity() == v.size());
+    }
 }
