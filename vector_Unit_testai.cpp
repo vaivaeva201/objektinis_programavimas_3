@@ -72,4 +72,52 @@ TEST_CASE("Vector konstruktoriai, rule of five", "[Vector]")
         REQUIRE(target.at(2) == 3);
         REQUIRE(source.size() == 0);
     }
+
+    SECTION ("list constructor")
+    {
+        Vector<int> v = {1, 2, 3, 4, 5};
+        int arr[] = {1, 2, 3, 4, 5};
+        REQUIRE(v.size() == 5);
+        for (int i = 0; i < v.size(); ++i) {
+            REQUIRE(v.at(i) == arr[i]);
+        }
+    }
+}
+
+TEST_CASE("dydis/talpa", "[Vector]") 
+{
+    Vector<int> v;
+
+    SECTION("empty")
+    {
+        REQUIRE(v.empty());
+        REQUIRE(v.size() == 0);
+    }
+
+    SECTION("size ir capacity")
+    {
+        v.push_back(1);
+        v.push_back(2);
+
+        REQUIRE_FALSE(v.empty());
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.capacity() >= 2); 
+    }
+
+    SECTION("max_size")
+    {
+        size_t expected = std::numeric_limits<size_t>::max() / sizeof(int);
+    
+        REQUIRE(v.max_size() == expected);
+        REQUIRE(v.max_size() > 0); 
+    }
+
+    SECTION("reverse")
+    {
+        size_t oldCap = v.capacity();
+        v.reserve(oldCap + 10);
+        REQUIRE(v.capacity() == oldCap + 10);
+    }
+
+    
 }
