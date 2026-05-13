@@ -16,6 +16,8 @@ class Vector {
             delete[] data_;
         }
 
+
+
         void push_back(const T& value)
         {
 
@@ -23,10 +25,11 @@ class Vector {
             size_++;
         }
 
-        bool emty()
+        bool emty() const
         {
             return size_ == 0;
         }
+
 
         size_type size() const
         {
@@ -43,6 +46,31 @@ class Vector {
             capacity_ = 0;
             delete[] data_;
             data_ = nullptr;
-    }
+        }
+
+        bool operator== (const Vector& rhs) const
+        {
+            if(size() != rhs.size())
+            {
+                return false;
+            }
+
+            for (int i = 0; i < size(); i++)
+            {
+                if(data_[i] != rhs.data_[i])
+                {
+                    return false;
+                }
+            }
+            
+            return true;
+        }
+
+        bool operator!= (const Vector& rhs) const
+        {
+            return !(*this == rhs);
+        }
+
+
 
 };
