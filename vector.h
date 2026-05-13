@@ -103,9 +103,90 @@ class Vector {
             return size_;
         }
 
+        size_type max_size() const
+        {
+            return std::numeric_limits<size_type>::max() / sizeof(T);
+        }
+
         size_type capacity() const
         {
             return capacity_;
+        }
+
+        void reserve(size_type new_cap) 
+        {
+            if (new_cap > capacity_) 
+            {
+                T* newdata = new T[new_cap];
+                for (size_t i = 0; i < size_; i++) 
+                    newdata[i] = std::move(data_[i]);
+                delete[] data_;
+                data_ = newdata;
+                capacity_ = new_cap;
+            }
+        }
+
+        void shrink_to_fit()
+        {
+            if (capacity_ > size_) 
+            {
+                T* newdata_ = new T[size_];
+                for (size_type i = 0; i < size_; ++i) {
+                    newdata_[i] = std::move(data_[i]);
+                }
+                delete[] data_;
+                data_ = newdata_;
+                capacity_ = size_;
+            }
+        }
+
+        void resize()
+        {
+            capacity_ *= 2;
+            T* newdata_ = new T[capacity_];
+            for(size_t i=0; i<size_; i++)
+            {
+                newdata_[i] = data_[i];
+            }
+            delete[] data_;
+            data_ = newdata_;
+        }
+
+        void resize(size_t newSize) 
+        {
+        
+            if (newSize > capacity_) 
+            {
+        
+                size_t newCapacity = std::max(newSize, capacity_ * 2);
+                
+        
+                T* newdata_ = new T[newCapacity];
+                
+            
+                for (size_t i = 0; i < size_; i++) 
+                {
+                    newdata_[i] = data_[i];
+                }
+                
+                for (size_t i = size_; i < newSize; i++) 
+                {
+                    newdata_[i] = T(); 
+                }
+                
+                delete[] data_;
+                data_ = newdata_;
+                capacity_ = newCapacity;
+            }
+        
+            else if (newSize > size_) 
+            {
+                for (size_t i = size_; i < newSize; i++) 
+                {
+                    data_[i] = T(); 
+                }
+            }
+            size_ = newSize;
         }
 
         //prieiga prie elementu
@@ -133,6 +214,10 @@ class Vector {
             return at(size_-1);
         }
 
+         T* data() 
+        {
+            return data_;
+        }
 
         //elementu pridejimas, salinimas
         void clear(){
@@ -171,6 +256,32 @@ class Vector {
             {
                 --size_;
             }
+        }
+
+        void insert(size_t index, const T& value) 
+        {
+            if (index > size_) 
+                throw std::out_of_range("Insert index out of range");
+            if (size_ == capacity_) 
+                reserve(capacity_ == 0 ? 1 : capacity_ * 2);
+            
+            for (size_t i = size_; i > index; --i) 
+            {
+                data_[i] = std::move(data_[i - 1]);
+            }
+            data_[index] = value;
+            size_++;
+        }
+
+        void erase(size_t index) 
+        {
+            if (index >= size_) 
+                throw std::out_of_range("Erase index out of range");
+            for (size_t i = index; i < size_ - 1; i++) 
+            {
+                data_[i] = std::move(data_[i + 1]);
+            }
+            size_--;
         }
 
         //operators
