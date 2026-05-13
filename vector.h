@@ -63,18 +63,8 @@ class Vector {
             return *this;
         }
 
-        //???
-        Vector(int elements, int value = 0) : size_(elements), capacity_(elements)
-        {
-            data_ = new T[capacity_];
-            for(int i = 0; i < size_; i++)
-            {
-                data_[i] = value;
-            }
-        }
-
         //list construktor
-        Vector(std::initializer_list<T>& list) : size_(0), capacity_(list.size())
+        Vector(std::initializer_list<T>& list) : size_(list.size()), capacity_(list.size())
         {
             data_ = new T[capacity_];
 
@@ -138,18 +128,6 @@ class Vector {
                 data_ = newdata_;
                 capacity_ = size_;
             }
-        }
-
-        void resize()
-        {
-            capacity_ *= 2;
-            T* newdata_ = new T[capacity_];
-            for(size_t i=0; i<size_; i++)
-            {
-                newdata_[i] = data_[i];
-            }
-            delete[] data_;
-            data_ = newdata_;
         }
 
         void resize(size_t newSize) 
