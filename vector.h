@@ -44,10 +44,26 @@ class Vector {
                     i++;
                 }
         }
+        
+         //move assignment operator
+        Vector& operator=(Vector&& rhs) noexcept
+        {
+            if(this == &rhs) return *this;
+            delete[] data_;
+            data_ = rhs.data_;
+            size_ = rhs.size_;
+            capacity_ = rhs.capacity_;
+
+            rhs.data_ = nullptr;
+            rhs.size_ = 0;
+            rhs.capacity_ = 0;
+
+            return *this;
+        }
 
         //destructor
         ~Vector(){
-            delete[] data_;
+            clear();
         }
 
         //dytis, talpa
@@ -66,6 +82,32 @@ class Vector {
         {
             return capacity_;
         }
+
+        //prieiga prie elementu
+        T& operator[](size_t index)
+        {
+            return data_[index];
+        }
+
+        T& at(int index)
+        {
+            if((index < 0 ) || (index >= size_))
+            {
+                throw std::out_of_range("Index out of range");
+            }
+            return data_[index];
+        }
+
+        T& front()
+        {
+            return at(0);
+        }
+
+        T& back()
+        {
+            return at(size_-1);
+        }
+
 
         //elementu pridejimas, salinimas
         void clear(){
@@ -96,6 +138,14 @@ class Vector {
                 data_ = newdata_;
             }
 
+        }
+
+        void pop_back()
+        {
+            if(size_ > 0)
+            {
+                --size_;
+            }
         }
 
         //operators
