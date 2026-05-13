@@ -22,6 +22,47 @@ class Vector {
                 data_[i] = rhs.data_[i];
             }
         }    
+
+        //copy assignment operator
+        Vector& operator=(const Vector& rhs)
+        {
+            if(this == &rhs) return *this;
+
+            size_ = rhs.size_;
+            capacity_ = rhs.capacity_;
+            data_ = new T[capacity_];
+            for(size_t i = 0; i < size_; ++i) {
+                data_[i] = rhs.data_[i];
+            }
+
+            return *this;
+        }
+
+        //move constructor
+        Vector(Vector&& rhs) noexcept 
+        : data_(rhs.data_), size_(rhs.size_), capacity_(rhs.capacity_)
+        {
+            rhs.data_ = nullptr; 
+            rhs.size_ = 0;
+            rhs.capacity_ = 0;
+        }
+
+         //move assignment operator
+        Vector& operator=(Vector&& rhs) noexcept
+        {
+            if(this == &rhs) return *this;
+            delete[] data_;
+            data_ = rhs.data_;
+            size_ = rhs.size_;
+            capacity_ = rhs.capacity_;
+
+            rhs.data_ = nullptr;
+            rhs.size_ = 0;
+            rhs.capacity_ = 0;
+
+            return *this;
+        }
+
         //???
         Vector(int elements, int value = 0) : size_(elements), capacity_(elements)
         {
@@ -43,22 +84,6 @@ class Vector {
                     data_[i] = value;
                     i++;
                 }
-        }
-        
-         //move assignment operator
-        Vector& operator=(Vector&& rhs) noexcept
-        {
-            if(this == &rhs) return *this;
-            delete[] data_;
-            data_ = rhs.data_;
-            size_ = rhs.size_;
-            capacity_ = rhs.capacity_;
-
-            rhs.data_ = nullptr;
-            rhs.size_ = 0;
-            rhs.capacity_ = 0;
-
-            return *this;
         }
 
         //destructor
