@@ -130,4 +130,55 @@ TEST_CASE("dydis/talpa", "[Vector]")
         v.shrink_to_fit();
         REQUIRE(v.capacity() == v.size());
     }
+//
+    SECTION("resize")
+    {
+        Vector<int> v;
+        v.reserve(2);
+        v.push_back(1);
+        v.push_back(2);
+        v.push_back(3); 
+
+        REQUIRE(v.size() == 3);
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 2);
+        REQUIRE(v.at(2) == 3);
+        REQUIRE(v.capacity() >= 3);
+    }
+}
+
+TEST_CASE("prieiga prie elementu", "[Vector]") 
+{
+    Vector<int> v = {1, 2, 3, 4};
+
+    SECTION("operator[]")
+    {
+        REQUIRE(v[1] == 2);
+        REQUIRE(v[3] == 4);
+    }
+
+    SECTION("at")
+    {
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(3) == 4);
+        REQUIRE_THROWS_AS(v.at(4), std::out_of_range);
+    }
+
+    SECTION("front")
+    {
+        REQUIRE(v.front() == 1);
+
+    }
+
+    SECTION("back")
+    {
+        REQUIRE(v.back() == 4);
+    }
+
+    SECTION("data")
+    {
+        int* ptr = v.data();
+        REQUIRE(ptr[0] == 1);
+        REQUIRE(ptr[3] == 4);
+    }
 }
