@@ -744,7 +744,7 @@ void meniu(Vector < Studentas > &grupe)
                 //failu_generavimas(10000);
                 //failu_generavimas(100000);
                 //failu_generavimas(1000000);
-                //failu_generavimas(10000000);
+                failu_generavimas(10000000);
                 Vector<int> dydziai = {1000, 10000, 100000, 1000000, 10000000};
                 for (auto x : dydziai) {
                     cout << "Testas su " << x << " įrašų: " << endl;

@@ -22,6 +22,9 @@ vector:
 	g++ -std=c++17 vector_Unit_testai.cpp funkcijos.cpp -I/opt/homebrew/include -L/opt/homebrew/lib -lCatch2Main -lCatch2 -o unit_test	
 	./unit_test
 
+speed:
+	g++ -std=c++17 greicio_testas.cpp funkcijos.cpp -I/opt/homebrew/include -L/opt/homebrew/lib -lCatch2Main -lCatch2 -o speed_test
+	./speed_test
 
 clean:
 	rm -f programa
