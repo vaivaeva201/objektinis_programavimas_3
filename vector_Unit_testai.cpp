@@ -41,10 +41,10 @@ TEST_CASE("Vector konstruktoriai, rule of five", "[Vector]")
         for (size_t i = 0; i < original.size(); ++i) {
             REQUIRE(copy.at(i) == original.at(i));
         }
-//
-        copy.at(1) = 42;
+
+        copy.at(1) = 20;
         REQUIRE(original.at(1) == 2);
-        REQUIRE(copy.at(1) == 42);
+        REQUIRE(copy.at(1) == 20);
     }
 
     SECTION("move construktor")
@@ -58,6 +58,7 @@ TEST_CASE("Vector konstruktoriai, rule of five", "[Vector]")
         REQUIRE(moved.at(2) == 3);
 
         REQUIRE(source.size() == 0);
+        REQUIRE(source.data() == nullptr);
     }
 
     SECTION ("move asignment operator")
@@ -130,20 +131,22 @@ TEST_CASE("dydis/talpa", "[Vector]")
         v.shrink_to_fit();
         REQUIRE(v.capacity() == v.size());
     }
-//
+
     SECTION("resize")
     {
-        Vector<int> v;
-        v.reserve(2);
-        v.push_back(1);
-        v.push_back(2);
-        v.push_back(3); 
+        Vector<int> v = {1, 2, 3};
 
-        REQUIRE(v.size() == 3);
+        v.resize(5); 
+        REQUIRE(v.size() == 5);
+        REQUIRE(v.at(0) == 1); 
+        REQUIRE(v.at(3) == 0); 
+        REQUIRE(v.at(4) == 0);
+
+        v.resize(2);
+        REQUIRE(v.size() == 2);
         REQUIRE(v.at(0) == 1);
         REQUIRE(v.at(1) == 2);
-        REQUIRE(v.at(2) == 3);
-        REQUIRE(v.capacity() >= 3);
+        REQUIRE_THROWS_AS(v.at(3), std::out_of_range);
     }
 }
 
@@ -256,15 +259,20 @@ TEST_CASE("elementu pridejimas, salinimas", "[Vector]")
 
 TEST_CASE("iteratoriai", "[Vector]") 
 {
+    Vector<int> v = {10, 20, 30};
 
     SECTION("begin")
     {
+        REQUIRE(*v.begin() == 10);
         
+        *v.begin() = 100;
+        REQUIRE(v[0] == 100);
     }
 
     SECTION("end")
     {
-        
+        REQUIRE(*(v.end() - 1) == 30);
+        REQUIRE(v.end() - v.begin() == v.size());
     }
 }
 
