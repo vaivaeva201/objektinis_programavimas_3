@@ -1,3 +1,5 @@
+#ifndef VECTOR_H
+#define VECTOR_H
 #include <iostream>
 
 template <typename T>
@@ -8,6 +10,7 @@ class Vector {
         T* data_;
 
     public:
+        using value_type = T;
         using size_type = std::size_t;
 
         //default construktor
@@ -256,6 +259,20 @@ class Vector {
             size_--;
         }
 
+        T* erase(T* first, T* last) 
+        {
+            if (first == last) 
+                return last;
+            size_t num_to_move = end() - last;
+            for (size_t i = 0; i < num_to_move; ++i) 
+            {
+                first[i] = std::move(last[i]);
+            }
+            
+            size_ -= (last - first);
+            return first;
+        }
+
         //iteratoriai
         T* begin()
         {
@@ -265,6 +282,15 @@ class Vector {
         T* end()
         {
             return data_ + size_;
+        }
+        const T* begin() const 
+        { 
+            return data_; 
+        }
+
+        const T* end() const 
+        { 
+            return data_ + size_; 
         }
 
         //operators
@@ -307,3 +333,5 @@ class Vector {
             return out;
         }
 };
+
+#endif

@@ -1,5 +1,5 @@
 main:
-	g++ vector.cpp funkcijos.cpp -o programa
+	g++ pradinis.cpp funkcijos.cpp -o programa
 	./programa
 
 run0:

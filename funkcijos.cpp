@@ -1,4 +1,5 @@
 #include "studentas.h"
+#include "vector.h"
 
 void failu_generavimas(int Studentu_sk)
 {
@@ -34,12 +35,12 @@ void failu_generavimas(int Studentu_sk)
 
 }
 
-void studentu_skirstymas(vector < Studentas > &grupe)
+void studentu_skirstymas(Vector < Studentas > &grupe)
 {
     auto start = std::chrono::high_resolution_clock::now();
 
-    vector<Studentas> vargsiukai;
-    vector<Studentas> kietakai;
+    Vector<Studentas> vargsiukai;
+    Vector<Studentas> kietakai;
 
     vargsiukai.reserve(grupe.size() / 2);
     kietakai.reserve(grupe.size() / 2);
@@ -62,11 +63,11 @@ void studentu_skirstymas(vector < Studentas > &grupe)
     isvedimas_i_du_failus(vargsiukai, kietakai);
 }
 
-void isvedimas_i_du_failus (vector < Studentas > &vargsiukai, vector < Studentas > &kietakai)
+void isvedimas_i_du_failus (Vector < Studentas > &vargsiukai, Vector < Studentas > &kietakai)
 {
     auto start = std::chrono::high_resolution_clock::now();
 
-    auto i_faila = [](string pav, vector<Studentas>& duomenys) 
+    auto i_faila = [](string pav, Vector<Studentas>& duomenys) 
     {
         std::ofstream fr(pav);
         fr << left << setw(20) << "Vardas" << setw(20) << "Pavarde" << setw(20) << "Galutinis" << endl;
@@ -92,7 +93,7 @@ void isvedimas_i_du_failus (vector < Studentas > &vargsiukai, vector < Studentas
 
 void skaiciuoti_viska(Studentas &x)
 {
-    vector<int> temp_paz = x.pazymiai(); 
+    Vector<int> temp_paz = x.pazymiai(); 
     int egz = x.egzaminas();
 
     double sum = accumulate(temp_paz.begin(), temp_paz.end(), 0.0);
@@ -100,7 +101,7 @@ void skaiciuoti_viska(Studentas &x)
     x.setGalutinisV(vid);
 
     double mediana;
-    sort(temp_paz.begin(), temp_paz.end());
+    std::sort(temp_paz.begin(), temp_paz.end());
 
     if (temp_paz.size() % 2 == 0)
     {
@@ -114,7 +115,7 @@ void skaiciuoti_viska(Studentas &x)
     x.setGalutinisM(med);   
 }
 
-void skaityti_faila_automatiskai(string pav, vector<Studentas>& grupe)
+void skaityti_faila_automatiskai(string pav, Vector<Studentas>& grupe)
 {
     
     std::ifstream fd(pav);
@@ -136,7 +137,7 @@ void skaityti_faila_automatiskai(string pav, vector<Studentas>& grupe)
         string v, p;
         if (!(eilute >> v >> p)) continue;
 
-        vector<int> temp_paz;
+        Vector<int> temp_paz;
         int pazymys;
         while (eilute >> pazymys) 
         {
@@ -194,7 +195,7 @@ string pasirinkimas ()
     return failas;
 }
 
-void skaityti_faila(vector < Studentas > &grupe)
+void skaityti_faila(Vector < Studentas > &grupe)
 {
     string failas;
     std:: ifstream fd;
@@ -247,14 +248,14 @@ void skaityti_faila(vector < Studentas > &grupe)
     cout << "Failo nuskaitymas ir skaičiavimai užtruko: " << diff.count() << " s" << endl;
 }
 
-void duomenu_ivedimas(vector < Studentas > &grupe)
+void duomenu_ivedimas(Vector < Studentas > &grupe)
 {
 
     while(true)
     {
         string v, p;
         int temp;
-        vector<int> temp_paz;
+        Vector<int> temp_paz;
 
         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         cout << "Įveskite studento vardą (jeigu įvedetė visus norimus studentus įrašykite 'x'): ";
@@ -333,7 +334,7 @@ void duomenu_ivedimas(vector < Studentas > &grupe)
 
 void vidurkis(Studentas &x)
 {
-    const std::vector<int>& p = x.pazymiai(); 
+    const Vector<int>& p = x.pazymiai(); 
  
     if (p.empty()) {
         double galutinis = x.egzaminas() * 0.6;
@@ -352,7 +353,7 @@ void vidurkis(Studentas &x)
 void mediana(Studentas &x)
 {
     double med_reiksme;
-    vector<int> temp_paz = x.pazymiai();
+    Vector<int> temp_paz = x.pazymiai();
 
     if (temp_paz.empty()) 
     {
@@ -361,7 +362,7 @@ void mediana(Studentas &x)
         return;
     }
 
-    sort(temp_paz.begin(), temp_paz.end());
+   std::sort(temp_paz.begin(), temp_paz.end());
 
     if (temp_paz.size() % 2 == 0)
     {
@@ -381,7 +382,7 @@ void skaiciu_generevimas(Studentas &A)
 
     RandInt rnd{1, 10};
     int kiek = rnd();
-    vector<int> temp_paz;
+    Vector<int> temp_paz;
 
     for (int i = 0; i < kiek; i++)
     {
@@ -393,7 +394,7 @@ void skaiciu_generevimas(Studentas &A)
 
 }
 
-void rezultatai (vector < Studentas > &grupe)
+void rezultatai (Vector < Studentas > &grupe)
 {
     int formatas;
     cout << "Prašau pasirinkite ar norite galutinį balą skaičiuoti su vidurkiu ar mediana. (Vidurkiu - 0, mediana - 1): ";
@@ -449,7 +450,7 @@ void rezultatai (vector < Studentas > &grupe)
 
 }
 
-void rezultatu_isvedimas(vector < Studentas > &grupe)
+void rezultatu_isvedimas(Vector < Studentas > &grupe)
 {
 
     std::ostringstream buferis;
@@ -542,7 +543,7 @@ bool pagal_med_maz(const Studentas &a, const Studentas &b)
     return a.mediana() > b.mediana(); 
 }
 
-void rikiavimas(vector < Studentas > &grupe)
+void rikiavimas(Vector < Studentas > &grupe)
 {
     int pasirinkimas = 0;
     cout << "Pasirinkite rikiavimo būdą:" << endl;
@@ -605,7 +606,7 @@ void rikiavimas(vector < Studentas > &grupe)
     }
 }
 
-void meniu(vector < Studentas > &grupe)
+void meniu(Vector < Studentas > &grupe)
 {
     int pasirinkimas = 0;
 
@@ -744,7 +745,7 @@ void meniu(vector < Studentas > &grupe)
                 //failu_generavimas(100000);
                 //failu_generavimas(1000000);
                 //failu_generavimas(10000000);
-                vector<int> dydziai = {1000, 10000, 100000, 1000000, 10000000};
+                Vector<int> dydziai = {1000, 10000, 100000, 1000000, 10000000};
                 for (auto x : dydziai) {
                     cout << "Testas su " << x << " įrašų: " << endl;
                     cout << "-----------------------------------------------------------" << endl;
@@ -879,7 +880,7 @@ void meniu(vector < Studentas > &grupe)
     s.setVardas(v);
     s.setPavarde(p);
 
-    vector<int> temp_paz;
+    Vector<int> temp_paz;
     int balas;
     
     while (iss >> balas) 

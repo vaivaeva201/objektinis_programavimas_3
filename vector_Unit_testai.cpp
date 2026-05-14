@@ -255,6 +255,22 @@ TEST_CASE("elementu pridejimas, salinimas", "[Vector]")
 
         REQUIRE_THROWS_AS(v.erase(10), std::out_of_range);
     }
+
+     SECTION("erase() ")
+     {
+        Vector<int> v;
+        for (int i = 1; i <= 5; ++i){
+            v.push_back(i);
+        }
+
+        auto it = v.erase(v.begin() + 1, v.begin() + 4); 
+
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 5);
+        REQUIRE(*it == 5);
+    }
+
 }
 
 TEST_CASE("iteratoriai", "[Vector]") 

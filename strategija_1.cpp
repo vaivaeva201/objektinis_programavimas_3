@@ -1,9 +1,10 @@
 #include "studentas.h"
 #include "konteineriai.h"
+#include "vector.h"
 
 int main(){
 
-    vector < Studentas > studentai_v;
+    Vector < Studentas > studentai_v;
     list < Studentas > studentai_l;
     deque < Studentas > studentai_d;
 

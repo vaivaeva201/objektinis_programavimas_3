@@ -50,7 +50,7 @@ void rusiavimas_maz (Container& grupe)
     } 
     else 
     {
-        sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) 
+        std::sort(grupe.begin(), grupe.end(), [](const Studentas& a, const Studentas& b) 
         {
             return a.vidurkis() > b.vidurkis();
         });
@@ -64,7 +64,7 @@ void stunedu_skirstymas (Container& grupe)
     Container vargsiukai;
     Container kietakai;
 
-    if constexpr (std::is_same_v<Container, std::vector<Studentas>>) 
+    if constexpr (std::is_same_v<Container, Vector<Studentas>>) 
     {
         vargsiukai.reserve(grupe.size() / 2);
         kietakai.reserve(grupe.size() / 2);
@@ -98,7 +98,7 @@ void pirma_strategija(Container& grupe){
         }
     }
 
-    if constexpr(std::is_same_v<Container, vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
+    if constexpr(std::is_same_v<Container, Vector<Studentas>> || std::is_same_v<Container, deque<Studentas>>){
         vargsiukai.shrink_to_fit();
         kietakai.shrink_to_fit();
     }
@@ -131,7 +131,7 @@ void trecia_strategija(Container& grupe) {
     std::move(it, grupe.end(), std::back_inserter(vargsiukai));
     grupe.erase(it, grupe.end());
     
-    if constexpr(std::is_same_v<Container, std::vector<Studentas>>)
+    if constexpr(std::is_same_v<Container, Vector<Studentas>>)
      {
         grupe.shrink_to_fit();
     }

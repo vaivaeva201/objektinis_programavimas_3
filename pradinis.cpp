@@ -1,8 +1,11 @@
 #include "studentas.h"
+#include "vector.h"
+
+void meniu(Vector<Studentas> &grupe);
 
 int main(){
 
-    vector < Studentas > grupe;
+    Vector < Studentas > grupe;
     meniu (grupe);
 
     return 0;
