@@ -218,12 +218,39 @@ TEST_CASE("elementu pridejimas, salinimas", "[Vector]")
 
     SECTION("insert")
     {
-        
+        Vector<int> v;
+        v.push_back(1);
+        v.push_back(3);
+        v.insert(1, 2);  
+
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 2);
+        REQUIRE(v.at(2) == 3);
+        REQUIRE(v.size() == 3);
+
+        REQUIRE_THROWS_AS(v.insert(10, 100), std::out_of_range);
     }
 
     SECTION("erase")
     {
-        
+        Vector<int> v = {1, 2, 3, 4, 5};
+        v.erase(2); 
+
+        REQUIRE(v.size() == 4);
+        REQUIRE(v.at(0) == 1);
+        REQUIRE(v.at(1) == 2);
+        REQUIRE(v.at(2) == 4); 
+        REQUIRE(v.at(3) == 5); 
+
+        v.erase(0);
+        REQUIRE(v.size() == 3);
+        REQUIRE(v.at(0) == 2);
+
+        v.erase(v.size() - 1);
+        REQUIRE(v.size() == 2);
+        REQUIRE(v.at(1) == 4);
+
+        REQUIRE_THROWS_AS(v.erase(10), std::out_of_range);
     }
 }
 
@@ -245,12 +272,16 @@ TEST_CASE("operatoriai", "[Vector]")
 {
     SECTION("operator ==")
     {
-        
+        Vector<int> a = {1,2,3,4};
+        Vector<int> b = {1,2,3,4};
+        REQUIRE(a==b);
     }
 
     SECTION("operator !=")
     {
-        
+        Vector<int> a = {1,2,3,4};
+        Vector<int> b = {3,2,3,4};
+        REQUIRE(a!=b);
     }
 
 }
