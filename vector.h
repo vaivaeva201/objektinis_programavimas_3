@@ -133,13 +133,9 @@ class Vector {
         
             if (newSize > capacity_) 
             {
-        
                 size_t newCapacity = std::max(newSize, capacity_ * 2);
-                
-        
                 T* newdata_ = new T[newCapacity];
-                
-            
+        
                 for (size_t i = 0; i < size_; i++) 
                 {
                     newdata_[i] = data_[i];
