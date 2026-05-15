@@ -105,7 +105,7 @@ void shrink_to_fit()
 `````
 
 * operator[]
-Grąžina nuorodą į elementą vektoriūje.
+Grąžina nuorodą į elementą vektoriuje.
 
 ````cpp
 T& operator[](size_t index)

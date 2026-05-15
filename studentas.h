@@ -15,6 +15,7 @@
 #include <chrono>
 #include "zmogus.h"
 #include "vector.h"
+#include <deque>
 
 using std:: string;
 //using std:: vector;
