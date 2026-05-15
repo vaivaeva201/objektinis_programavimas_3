@@ -1,0 +1,288 @@
+\doxysection{konteineriai.\+h}
+\hypertarget{konteineriai_8h_source}{}\label{konteineriai_8h_source}\doxymbox{\hyperlink{konteineriai_8h}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#ifndef\ KONTEINERIAI\_H}}
+\DoxyCodeLine{00002\ \textcolor{preprocessor}{\#define\ KONTEINERIAI\_H}}
+\DoxyCodeLine{00003\ \textcolor{preprocessor}{\#include\ "{}\doxymbox{\hyperlink{studentas_8h}{studentas.h}}"{}}}
+\DoxyCodeLine{00004\ \textcolor{preprocessor}{\#include\ <list>}}
+\DoxyCodeLine{00005\ \textcolor{preprocessor}{\#include\ <type\_traits>}}
+\DoxyCodeLine{00006\ \textcolor{preprocessor}{\#include\ <algorithm>}}
+\DoxyCodeLine{00007\ }
+\DoxyCodeLine{00008\ \textcolor{keyword}{using\ }std::\ deque;}
+\DoxyCodeLine{00009\ \textcolor{keyword}{using\ }std::\ list;}
+\DoxyCodeLine{00010\ }
+\DoxyCodeLine{00011\ \textcolor{keyword}{template}\ <\ \textcolor{keyword}{typename}\ Container\ >}
+\DoxyCodeLine{00012\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_ada2837974efd04723eed60470a003dc1}{skaityti\_failus}}\ (\textcolor{keywordtype}{string}\ pav,\ Container\&\ grupe)}
+\DoxyCodeLine{00013\ \{}
+\DoxyCodeLine{00014\ \ \ \ \ \textcolor{keywordtype}{string}\ v,\ p;}
+\DoxyCodeLine{00015\ }
+\DoxyCodeLine{00016\ \ \ \ \ std::ifstream\ fd(pav);}
+\DoxyCodeLine{00017\ \ \ \ \ \textcolor{keywordflow}{if}\ (!fd)\ }
+\DoxyCodeLine{00018\ \ \ \ \ \{}
+\DoxyCodeLine{00019\ \ \ \ \ \ \ \ \ std::cerr\ <<\ \textcolor{stringliteral}{"{}Klaida:\ nepavyko\ atidaryti\ failo!"{}}\ <<\ endl;}
+\DoxyCodeLine{00020\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00021\ \ \ \ \ \}}
+\DoxyCodeLine{00022\ }
+\DoxyCodeLine{00023\ \ \ \ \ \textcolor{keywordtype}{string}\ eil;}
+\DoxyCodeLine{00024\ \ \ \ \ getline(fd,\ eil);}
+\DoxyCodeLine{00025\ }
+\DoxyCodeLine{00026\ \ \ \ \ \textcolor{keywordflow}{while}(getline(fd,\ eil))\ }
+\DoxyCodeLine{00027\ \ \ \ \ \{}
+\DoxyCodeLine{00028\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(eil.empty())\ \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00029\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{class_studentas}{Studentas}}\ A;}
+\DoxyCodeLine{00030\ \ \ \ \ \ \ \ \ std::istringstream\ eilute(eil);}
+\DoxyCodeLine{00031\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (eilute\ >>\ A)\ }
+\DoxyCodeLine{00032\ \ \ \ \ \ \ \ \ \{\ }
+\DoxyCodeLine{00033\ \ \ \ \ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{funkcijos_8cpp_a2ab78b496dbb4e60ce42619aeeaed225}{skaiciuoti\_viska}}(A);}
+\DoxyCodeLine{00034\ \ \ \ \ \ \ \ \ \ \ \ \ grupe.push\_back(std::move(A));}
+\DoxyCodeLine{00035\ \ \ \ \ \ \ \ \ \}\ \ \ \ }
+\DoxyCodeLine{00036\ \ \ \ \ \}}
+\DoxyCodeLine{00037\ \ \ \ \ fd.close();}
+\DoxyCodeLine{00038\ \}}
+\DoxyCodeLine{00039\ }
+\DoxyCodeLine{00040\ }
+\DoxyCodeLine{00041\ \textcolor{keyword}{template}\ <\ \textcolor{keyword}{typename}\ Container\ >}
+\DoxyCodeLine{00042\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_ac7a0baea6f5742552f7f6e9af5270e31}{rusiavimas\_maz}}\ (Container\&\ grupe)}
+\DoxyCodeLine{00043\ \{}
+\DoxyCodeLine{00044\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<Container,\ std::list<Studentas>>)}
+\DoxyCodeLine{00045\ \ \ \ \ \{}
+\DoxyCodeLine{00046\ \ \ \ \ \ \ \ \ grupe.sort([](\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_studentas}{Studentas}}\ \&a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_studentas}{Studentas}}\ \&b)\ }
+\DoxyCodeLine{00047\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00048\ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ a.\doxymbox{\hyperlink{class_studentas_a0e85ff82a3ab64d4d318da28c9ee06dc}{vidurkis}}()\ >\ b.\doxymbox{\hyperlink{class_studentas_a0e85ff82a3ab64d4d318da28c9ee06dc}{vidurkis}}();}
+\DoxyCodeLine{00049\ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00050\ \ \ \ \ \}\ }
+\DoxyCodeLine{00051\ \ \ \ \ \textcolor{keywordflow}{else}\ }
+\DoxyCodeLine{00052\ \ \ \ \ \{}
+\DoxyCodeLine{00053\ \ \ \ \ \ \ \ \ std::sort(grupe.begin(),\ grupe.end(),\ [](\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_studentas}{Studentas}}\&\ a,\ \textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_studentas}{Studentas}}\&\ b)\ }
+\DoxyCodeLine{00054\ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{00055\ \ \ \ \ \ \ \ \ \ \ \ \ return\ a.vidurkis()\ >\ b.vidurkis();}
+\DoxyCodeLine{00056\ \ \ \ \ \ \ \ \ \});}
+\DoxyCodeLine{00057\ }
+\DoxyCodeLine{00058\ \ \ \ \ \}}
+\DoxyCodeLine{00059\ \}}
+\DoxyCodeLine{00060\ }
+\DoxyCodeLine{00061\ \textcolor{keyword}{template}\ <\ \textcolor{keyword}{typename}\ Container\ >}
+\DoxyCodeLine{00062\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_a9fa7aec18fcac930a6acd4cfd2cd48c3}{stunedu\_skirstymas}}\ (Container\&\ grupe)}
+\DoxyCodeLine{00063\ \{}
+\DoxyCodeLine{00064\ \ \ \ \ Container\ vargsiukai;}
+\DoxyCodeLine{00065\ \ \ \ \ Container\ kietakai;}
+\DoxyCodeLine{00066\ }
+\DoxyCodeLine{00067\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}\ (std::is\_same\_v<Container,\ Vector<Studentas>>)\ }
+\DoxyCodeLine{00068\ \ \ \ \ \{}
+\DoxyCodeLine{00069\ \ \ \ \ \ \ \ \ vargsiukai.reserve(grupe.size()\ /\ 2);}
+\DoxyCodeLine{00070\ \ \ \ \ \ \ \ \ kietakai.reserve(grupe.size()\ /\ 2);}
+\DoxyCodeLine{00071\ \ \ \ \ \}}
+\DoxyCodeLine{00072\ }
+\DoxyCodeLine{00073\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{auto}\ \&x\ :\ grupe)\ }
+\DoxyCodeLine{00074\ \ \ \ \ \{}
+\DoxyCodeLine{00075\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (x.vidurkis()\ <\ 5.0)}
+\DoxyCodeLine{00076\ \ \ \ \ \ \ \ \ \ \ \ \ vargsiukai.push\_back(std::move(x));}
+\DoxyCodeLine{00077\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00078\ \ \ \ \ \ \ \ \ \ \ \ \ kietakai.push\_back(std::move(x));}
+\DoxyCodeLine{00079\ \ \ \ \ \}}
+\DoxyCodeLine{00080\ \ \ \ \ }
+\DoxyCodeLine{00081\ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_a1ae10b1ab525daf8e2bf1eb12229c8b6}{isvedimas}}(vargsiukai,\ kietakai);}
+\DoxyCodeLine{00082\ }
+\DoxyCodeLine{00083\ \ \ \ \ grupe.clear();\ }
+\DoxyCodeLine{00084\ \}}
+\DoxyCodeLine{00085\ }
+\DoxyCodeLine{00086\ }
+\DoxyCodeLine{00087\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00088\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_ab8a4ee9187ace699087535ab3d63a9ca}{pirma\_strategija}}(Container\&\ grupe)\{}
+\DoxyCodeLine{00089\ \ \ \ \ Container\ vargsiukai;}
+\DoxyCodeLine{00090\ \ \ \ \ Container\ kietakai;}
+\DoxyCodeLine{00091\ }
+\DoxyCodeLine{00092\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&s\ :\ grupe)}
+\DoxyCodeLine{00093\ \ \ \ \ \{}
+\DoxyCodeLine{00094\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}\ (s.vidurkis()\ <\ 5)\{}
+\DoxyCodeLine{00095\ \ \ \ \ \ \ \ \ \ \ \ \ vargsiukai.push\_back(s);}
+\DoxyCodeLine{00096\ \ \ \ \ \ \ \ \ \}\ \textcolor{keywordflow}{else}\ \textcolor{keywordflow}{if}\ (s.vidurkis()\ >=\ 5)\{}
+\DoxyCodeLine{00097\ \ \ \ \ \ \ \ \ \ \ \ \ kietakai.push\_back(s);}
+\DoxyCodeLine{00098\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00099\ \ \ \ \ \}}
+\DoxyCodeLine{00100\ }
+\DoxyCodeLine{00101\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}(std::is\_same\_v<Container,\ Vector<Studentas>>\ ||\ std::is\_same\_v<Container,\ deque<Studentas>>)\{}
+\DoxyCodeLine{00102\ \ \ \ \ \ \ \ \ vargsiukai.shrink\_to\_fit();}
+\DoxyCodeLine{00103\ \ \ \ \ \ \ \ \ kietakai.shrink\_to\_fit();}
+\DoxyCodeLine{00104\ \ \ \ \ \}}
+\DoxyCodeLine{00105\ }
+\DoxyCodeLine{00106\ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_a1ae10b1ab525daf8e2bf1eb12229c8b6}{isvedimas}}(vargsiukai,\ kietakai);}
+\DoxyCodeLine{00107\ \}}
+\DoxyCodeLine{00108\ }
+\DoxyCodeLine{00109\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00110\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_a6e7cbf8122177bc027a90d1569ab4c82}{antra\_strategija}}\ (Container\&\ grupe)}
+\DoxyCodeLine{00111\ \{}
+\DoxyCodeLine{00112\ \ \ \ \ Container\ vargsiukai;}
+\DoxyCodeLine{00113\ \ \ \ \ \textcolor{keywordflow}{while}\ (!grupe.empty()\ \&\&\ grupe.back().vidurkis()\ <\ 5.0)\ }
+\DoxyCodeLine{00114\ \ \ \ \ \{}
+\DoxyCodeLine{00115\ \ \ \ \ \ \ \ \ vargsiukai.push\_back(std::move(grupe.back()));\ }
+\DoxyCodeLine{00116\ \ \ \ \ \ \ \ \ grupe.pop\_back();}
+\DoxyCodeLine{00117\ \ \ \ \ \}}
+\DoxyCodeLine{00118\ }
+\DoxyCodeLine{00119\ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_a1ae10b1ab525daf8e2bf1eb12229c8b6}{isvedimas}}(vargsiukai,\ grupe);}
+\DoxyCodeLine{00120\ \}}
+\DoxyCodeLine{00121\ }
+\DoxyCodeLine{00122\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00123\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_a858b331f9d220fd0b34806a63cfc5ba2}{trecia\_strategija}}(Container\&\ grupe)\ \{}
+\DoxyCodeLine{00124\ \ \ \ \ Container\ vargsiukai;}
+\DoxyCodeLine{00125\ \ \ \ \ }
+\DoxyCodeLine{00126\ \ \ \ \ \textcolor{keyword}{auto}\ it\ =\ std::stable\_partition(grupe.begin(),\ grupe.end(),\ [](\textcolor{keyword}{const}\ \doxymbox{\hyperlink{class_studentas}{Studentas}}\&\ s)\ }
+\DoxyCodeLine{00127\ \ \ \ \ \{}
+\DoxyCodeLine{00128\ \ \ \ \ \ \ \ \ return\ s.vidurkis()\ >=\ 5.0;}
+\DoxyCodeLine{00129\ \ \ \ \ \});}
+\DoxyCodeLine{00130\ }
+\DoxyCodeLine{00131\ \ \ \ \ std::move(it,\ grupe.end(),\ std::back\_inserter(vargsiukai));}
+\DoxyCodeLine{00132\ \ \ \ \ grupe.erase(it,\ grupe.end());}
+\DoxyCodeLine{00133\ \ \ \ \ }
+\DoxyCodeLine{00134\ \ \ \ \ \textcolor{keywordflow}{if}\ \textcolor{keyword}{constexpr}(std::is\_same\_v<Container,\ Vector<Studentas>>)}
+\DoxyCodeLine{00135\ \ \ \ \ \ \{}
+\DoxyCodeLine{00136\ \ \ \ \ \ \ \ \ grupe.shrink\_to\_fit();}
+\DoxyCodeLine{00137\ \ \ \ \ \}}
+\DoxyCodeLine{00138\ }
+\DoxyCodeLine{00139\ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_a1ae10b1ab525daf8e2bf1eb12229c8b6}{isvedimas}}(vargsiukai,\ grupe);\ \ \ \ }
+\DoxyCodeLine{00140\ \}}
+\DoxyCodeLine{00141\ }
+\DoxyCodeLine{00142\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00143\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_abff39fa85ddd52bdd2f45468a6654acd}{tyrimas}}\ (\textcolor{keywordtype}{string}\ failas,\ Container\&\ grupe,\ \textcolor{keywordtype}{string}\ tipas)}
+\DoxyCodeLine{00144\ \{}
+\DoxyCodeLine{00145\ \ \ \ \ \textcolor{keywordtype}{double}\ nuskaitym\ =\ 0,\ rikiav\ =\ 0,\ skirst\ =\ 0;}
+\DoxyCodeLine{00146\ }
+\DoxyCodeLine{00147\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Testuojamas\ "{}}\ <<\ tipas\ \ <<\ endl;}
+\DoxyCodeLine{00148\ }
+\DoxyCodeLine{00149\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 3;\ i++)\ }
+\DoxyCodeLine{00150\ \ \ \ \ \{}
+\DoxyCodeLine{00151\ \ \ \ \ \ \ \ \ grupe.clear();}
+\DoxyCodeLine{00152\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00153\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ada2837974efd04723eed60470a003dc1}{skaityti\_failus}}(failas,\ grupe);}
+\DoxyCodeLine{00154\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00155\ \ \ \ \ \ \ \ \ nuskaitym\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00156\ }
+\DoxyCodeLine{00157\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00158\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ac7a0baea6f5742552f7f6e9af5270e31}{rusiavimas\_maz}}(grupe);}
+\DoxyCodeLine{00159\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00160\ \ \ \ \ \ \ \ \ rikiav\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00161\ }
+\DoxyCodeLine{00162\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00163\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_a9fa7aec18fcac930a6acd4cfd2cd48c3}{stunedu\_skirstymas}}(grupe);}
+\DoxyCodeLine{00164\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00165\ \ \ \ \ \ \ \ \ skirst\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00166\ }
+\DoxyCodeLine{00167\ \ \ \ \ \}}
+\DoxyCodeLine{00168\ }
+\DoxyCodeLine{00169\ \ \ \ \ cout\ <<\ tipas\ <<\ \textcolor{stringliteral}{"{}\ rezultatai\ (vidurkis\ is\ 3\ bandymu):"{}}\ <<\ endl;}
+\DoxyCodeLine{00170\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ Nuskaitymas\ užtruko:\ "{}}\ <<\ nuskaitym\ /\ 3.0\ <<\ \textcolor{stringliteral}{"{}\ s"{}}\ <<\ endl;}
+\DoxyCodeLine{00171\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ Rikiavimas\ užtruko:\ \ \ "{}}\ <<\ rikiav\ /\ 3.0\ <<\ \textcolor{stringliteral}{"{}\ s"{}}\ <<\ endl;}
+\DoxyCodeLine{00172\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ Skirstymas\ užtruko:\ \ \ "{}}\ <<\ skirst\ /\ 3.0\ <<\ \textcolor{stringliteral}{"{}\ s"{}}\ <<\ endl;}
+\DoxyCodeLine{00173\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}\ \ Bendras\ veikimos\ laikas:\ \ \ \ \ \ "{}}\ <<\ (nuskaitym\ +\ rikiav\ +\ skirst)\ /\ 3.0\ <<\ \textcolor{stringliteral}{"{}\ s"{}}\ <<\ endl;}
+\DoxyCodeLine{00174\ \}}
+\DoxyCodeLine{00175\ }
+\DoxyCodeLine{00176\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00177\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_a1e8155f7a7df3fed96f372998cdb30c9}{strategiju\_tyrimas}}\ (\textcolor{keywordtype}{string}\ failas,\ Container\&\ grupe,\ \textcolor{keywordtype}{string}\ tipas)}
+\DoxyCodeLine{00178\ \{}
+\DoxyCodeLine{00179\ \ \ \ \ \textcolor{keywordtype}{double}\ nuskaitym\ =\ 0,\ rikiav\ =\ 0,\ skirst\ =\ 0;}
+\DoxyCodeLine{00180\ }
+\DoxyCodeLine{00181\ }
+\DoxyCodeLine{00182\ }
+\DoxyCodeLine{00183\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 3;\ i++)\ }
+\DoxyCodeLine{00184\ \ \ \ \ \{}
+\DoxyCodeLine{00185\ \ \ \ \ \ \ \ \ grupe.clear();}
+\DoxyCodeLine{00186\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00187\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ada2837974efd04723eed60470a003dc1}{skaityti\_failus}}(failas,\ grupe);}
+\DoxyCodeLine{00188\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00189\ \ \ \ \ \ \ \ \ nuskaitym\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00190\ }
+\DoxyCodeLine{00191\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00192\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ac7a0baea6f5742552f7f6e9af5270e31}{rusiavimas\_maz}}(grupe);}
+\DoxyCodeLine{00193\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00194\ \ \ \ \ \ \ \ \ rikiav\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00195\ }
+\DoxyCodeLine{00196\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00197\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ab8a4ee9187ace699087535ab3d63a9ca}{pirma\_strategija}}(grupe);}
+\DoxyCodeLine{00198\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00199\ \ \ \ \ \ \ \ \ skirst\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00200\ }
+\DoxyCodeLine{00201\ \ \ \ \ \}}
+\DoxyCodeLine{00202\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Programa\ su\ "{}}\ <<\ tipas\ <<\ \textcolor{stringliteral}{"{}\ vidutiniškai\ užtruko:\ \ \ \ \ \ "{}}\ <<\ (nuskaitym\ +\ rikiav\ +\ skirst)\ /\ 3.0\ <<\ \textcolor{stringliteral}{"{}\ s"{}}\ <<\ endl;}
+\DoxyCodeLine{00203\ \}}
+\DoxyCodeLine{00204\ }
+\DoxyCodeLine{00205\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00206\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_a4f3a271526b31964f3cc686b7da50ee0}{strategijos\_du\_tyrimas}}\ (\textcolor{keywordtype}{string}\ failas,\ Container\&\ grupe,\ \textcolor{keywordtype}{string}\ tipas)}
+\DoxyCodeLine{00207\ \{}
+\DoxyCodeLine{00208\ \ \ \ \ \textcolor{keywordtype}{double}\ nuskaitym\ =\ 0,\ rikiav\ =\ 0,\ skirst\ =\ 0;}
+\DoxyCodeLine{00209\ }
+\DoxyCodeLine{00210\ }
+\DoxyCodeLine{00211\ }
+\DoxyCodeLine{00212\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 3;\ i++)\ }
+\DoxyCodeLine{00213\ \ \ \ \ \{}
+\DoxyCodeLine{00214\ \ \ \ \ \ \ \ \ grupe.clear();}
+\DoxyCodeLine{00215\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00216\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ada2837974efd04723eed60470a003dc1}{skaityti\_failus}}(failas,\ grupe);}
+\DoxyCodeLine{00217\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00218\ \ \ \ \ \ \ \ \ nuskaitym\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00219\ }
+\DoxyCodeLine{00220\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00221\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ac7a0baea6f5742552f7f6e9af5270e31}{rusiavimas\_maz}}(grupe);}
+\DoxyCodeLine{00222\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00223\ \ \ \ \ \ \ \ \ rikiav\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00224\ }
+\DoxyCodeLine{00225\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00226\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_a6e7cbf8122177bc027a90d1569ab4c82}{antra\_strategija}}(grupe);}
+\DoxyCodeLine{00227\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00228\ \ \ \ \ \ \ \ \ skirst\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00229\ }
+\DoxyCodeLine{00230\ \ \ \ \ \}}
+\DoxyCodeLine{00231\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Programa\ su\ "{}}\ <<\ tipas\ <<\ \textcolor{stringliteral}{"{}\ vidutiniškai\ užtruko:\ \ \ \ \ \ "{}}\ <<\ (nuskaitym\ +\ rikiav\ +\ skirst)\ /\ 3.0\ <<\ \textcolor{stringliteral}{"{}\ s"{}}\ <<\ endl;}
+\DoxyCodeLine{00232\ \}}
+\DoxyCodeLine{00233\ }
+\DoxyCodeLine{00234\ \textcolor{keyword}{template}\ <\textcolor{keyword}{typename}\ Container>}
+\DoxyCodeLine{00235\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_a7bc6f43382a1576915c8d4ba9548d4a7}{strategijos\_trys\_tyrimas}}\ (\textcolor{keywordtype}{string}\ failas,\ Container\&\ grupe,\ \textcolor{keywordtype}{string}\ tipas)}
+\DoxyCodeLine{00236\ \{}
+\DoxyCodeLine{00237\ \ \ \ \ \textcolor{keywordtype}{double}\ nuskaitym\ =\ 0,\ rikiav\ =\ 0,\ skirst\ =\ 0;}
+\DoxyCodeLine{00238\ }
+\DoxyCodeLine{00239\ }
+\DoxyCodeLine{00240\ }
+\DoxyCodeLine{00241\ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{int}\ i\ =\ 0;\ i\ <\ 3;\ i++)\ }
+\DoxyCodeLine{00242\ \ \ \ \ \{}
+\DoxyCodeLine{00243\ \ \ \ \ \ \ \ \ grupe.clear();}
+\DoxyCodeLine{00244\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00245\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ada2837974efd04723eed60470a003dc1}{skaityti\_failus}}(failas,\ grupe);}
+\DoxyCodeLine{00246\ \ \ \ \ \ \ \ \ \textcolor{keyword}{auto}\ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00247\ \ \ \ \ \ \ \ \ nuskaitym\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00248\ }
+\DoxyCodeLine{00249\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00250\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_ac7a0baea6f5742552f7f6e9af5270e31}{rusiavimas\_maz}}(grupe);}
+\DoxyCodeLine{00251\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00252\ \ \ \ \ \ \ \ \ rikiav\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00253\ }
+\DoxyCodeLine{00254\ \ \ \ \ \ \ \ \ s\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00255\ \ \ \ \ \ \ \ \ \doxymbox{\hyperlink{konteineriai_8h_a858b331f9d220fd0b34806a63cfc5ba2}{trecia\_strategija}}(grupe);}
+\DoxyCodeLine{00256\ \ \ \ \ \ \ \ \ e\ =\ std::chrono::high\_resolution\_clock::now();}
+\DoxyCodeLine{00257\ \ \ \ \ \ \ \ \ skirst\ +=\ std::chrono::duration<double>(e\ -\/\ s).count();}
+\DoxyCodeLine{00258\ }
+\DoxyCodeLine{00259\ \ \ \ \ \}}
+\DoxyCodeLine{00260\ \ \ \ \ cout\ <<\ \textcolor{stringliteral}{"{}Programa\ su\ "{}}\ <<\ tipas\ <<\ \textcolor{stringliteral}{"{}\ vidutiniškai\ užtruko:\ \ \ \ \ \ "{}}\ <<\ (nuskaitym\ +\ rikiav\ +\ skirst)\ /\ 3.0\ <<\ \textcolor{stringliteral}{"{}\ s"{}}\ <<\ endl;}
+\DoxyCodeLine{00261\ \}}
+\DoxyCodeLine{00262\ }
+\DoxyCodeLine{00263\ \textcolor{keyword}{template}\ <\ \textcolor{keyword}{typename}\ Container\ >}
+\DoxyCodeLine{00264\ \textcolor{keywordtype}{void}\ \doxymbox{\hyperlink{konteineriai_8h_a1ae10b1ab525daf8e2bf1eb12229c8b6}{isvedimas}}\ (Container\ \&vargsiukai,\ Container\ \&kietakai)}
+\DoxyCodeLine{00265\ \{}
+\DoxyCodeLine{00266\ }
+\DoxyCodeLine{00267\ \ \ \ \ \textcolor{keyword}{auto}\ i\_faila\ =\ [](\textcolor{keywordtype}{string}\ pav,\ Container\&\ duomenys)\ }
+\DoxyCodeLine{00268\ \ \ \ \ \{}
+\DoxyCodeLine{00269\ \ \ \ \ \ \ \ \ std::ofstream\ fr(pav);}
+\DoxyCodeLine{00270\ \ \ \ \ \ \ \ \ fr\ <<\ left\ <<\ setw(20)\ <<\ \textcolor{stringliteral}{"{}Vardas"{}}\ <<\ setw(20)\ <<\ \textcolor{stringliteral}{"{}Pavarde"{}}\ <<\ setw(20)\ <<\ \textcolor{stringliteral}{"{}Galutinis"{}}\ <<\ endl;}
+\DoxyCodeLine{00271\ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keyword}{const}\ \textcolor{keyword}{auto}\ \&s\ :\ duomenys)\ \{}
+\DoxyCodeLine{00272\ \ \ \ \ \ \ \ \ \ \ \ \ fr\ <<\ left\ <<\ setw(20)\ <<\ s.vardas()\ <<\ setw(20)\ <<\ s.pavarde()\ <<\ std::fixed\ <<\ std::setprecision(2)\ <<\ s.vidurkis()\ <<\ \textcolor{stringliteral}{"{}\(\backslash\)n"{}};}
+\DoxyCodeLine{00273\ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{00274\ \ \ \ \ \ \ \ \ fr.close();}
+\DoxyCodeLine{00275\ \ \ \ \ \};}
+\DoxyCodeLine{00276\ }
+\DoxyCodeLine{00277\ \ \ \ \ i\_faila(\textcolor{stringliteral}{"{}vargsiukai.txt"{}},\ vargsiukai);}
+\DoxyCodeLine{00278\ }
+\DoxyCodeLine{00279\ }
+\DoxyCodeLine{00280\ \ \ \ \ i\_faila(\textcolor{stringliteral}{"{}kietaikai.txt"{}},\ kietakai);}
+\DoxyCodeLine{00281\ \}}
+\DoxyCodeLine{00282\ }
+\DoxyCodeLine{00283\ \textcolor{preprocessor}{\#endif}}
+
+\end{DoxyCode}

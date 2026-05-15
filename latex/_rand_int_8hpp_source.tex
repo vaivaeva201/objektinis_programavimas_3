@@ -1,0 +1,18 @@
+\doxysection{Rand\+Int.\+hpp}
+\hypertarget{_rand_int_8hpp_source}{}\label{_rand_int_8hpp_source}\doxymbox{\hyperlink{_rand_int_8hpp}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00001\ \textcolor{preprocessor}{\#include\ <random>}}
+\DoxyCodeLine{00002\ }
+\DoxyCodeLine{00003\ \textcolor{keyword}{class\ }\doxymbox{\hyperlink{class_rand_int_a65769f660fbe5ed7fc2269a63624c821}{RandInt}}\ \{}
+\DoxyCodeLine{00004\ \ \ \textcolor{keyword}{public}:}
+\DoxyCodeLine{00005\ \ \ \ \ \doxymbox{\hyperlink{class_rand_int_a65769f660fbe5ed7fc2269a63624c821}{RandInt}}(\textcolor{keywordtype}{int}\ low,\ \textcolor{keywordtype}{int}\ high)\ :\ mt\{rd()\},\ dist\{low,\ high\}\ \{\ \}}
+\DoxyCodeLine{00006\ \ \ \ \ \textcolor{keywordtype}{int}\ \doxymbox{\hyperlink{class_rand_int_a56a5c4ac80fe8abc2ec5b0b35e203ede}{operator()}}()\ \{\ \textcolor{keywordflow}{return}\ dist(mt);\ \}\ \textcolor{comment}{//\ generating\ of\ Int\ values\ }}
+\DoxyCodeLine{00007\ \ \ \textcolor{keyword}{private}:}
+\DoxyCodeLine{00008\ \ \ \ \ std::random\_device\ rd;}
+\DoxyCodeLine{00009\ \ \ \ \ std::mt19937\ mt;}
+\DoxyCodeLine{00010\ \ \ \ \ std::uniform\_int\_distribution<int>\ dist;}
+\DoxyCodeLine{00011\ \};}
+\DoxyCodeLine{00012\ }
+\DoxyCodeLine{00013\ \textcolor{preprocessor}{\#pragma\ once}}
+
+\end{DoxyCode}

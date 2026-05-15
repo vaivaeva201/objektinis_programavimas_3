@@ -1,0 +1,136 @@
+\chapter{objektinis\+\_\+programavimas\+\_\+3 }
+\hypertarget{md__r_e_a_d_m_e}{}\label{md__r_e_a_d_m_e}\index{objektinis\_programavimas\_3@{objektinis\_programavimas\_3}}
+\label{md__r_e_a_d_m_e_autotoc_md0}%
+\Hypertarget{md__r_e_a_d_m_e_autotoc_md0}%
+\hypertarget{md__r_e_a_d_m_e_autotoc_md1}{}\doxysection{\texorpdfstring{v3.\+0}{v3.\+0}}\label{md__r_e_a_d_m_e_autotoc_md1}
+šioje laboratorinio versijoje sukurta \doxylink{class_vector}{Vector} klasė ir palyginamas jos veikimas su std::\+vector naudotu senesniose versijose (v1.\+5).
+
+{\bfseries{std::\+vector vs \doxylink{class_vector}{Vector} class}}
+
+
+\begin{DoxyItemize}
+\item Lyginama kiek vidutiniškai užtrunka tuščius vektorius užpildyti int elementų naudojant push\+\_\+back() funkciją:\+
+\end{DoxyItemize}
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Vektoriaus elementų kiekis  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}std::\+vector  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\doxylink{class_vector}{Vector} klasei  \\
+10000  &0.\+000558111  &0.\+000293931  \\
+100000  &0.\+00342118  &0.\+00172783  \\
+1000000  &0.\+0215837  &0.\+0100205  \\
+10000000  &0.\+201045  &0.\+115422  \\
+100000000  &2.\+04973  &1.\+10308  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item Lyginama kiek kartų įvyksta atminties perskirstymai:\+
+\end{DoxyItemize}
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Vektoriaus elementų kiekis  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}std::\+vector  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}\doxylink{class_vector}{Vector} klasei  \\
+10000  &14  &14  \\
+100000  &17  &17  \\
+1000000  &20  &20  \\
+10000000  &24  &24  \\
+100000000  &27  &27  \\
+\end{DoxyTable}
+
+
+
+\begin{DoxyItemize}
+\item Atlikta spartos analiė. Lyginama su 3 strategijos rezultatai v1.\+5.
+\end{DoxyItemize}
+
+
+\begin{DoxyTable}{3}{}{}{1}
+\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Studentų kiekis faile  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Konteinerio tipas  &\SetCell{c,bg=\tableheadbgcolor,font=\bfseries}Programos veikimo laikas  \\
+100 000  &std::\+vector  &0.\+904644 s  \\
+100 000  &\doxylink{class_vector}{Vector} klasė  &0.\+939137 s  \\
+1 000 000  &std::\+vector  &9.\+17372 s  \\
+1 000 000  &\doxylink{class_vector}{Vector} klasė  &9.\+53246 s  \\
+10 000 000  &std::\+vector  &99.\+0563 s  \\
+10 000 000  &\doxylink{class_vector}{Vector} klasė  &102.\+984 s  \\
+\end{DoxyTable}
+
+
+{\bfseries{Funkcijų aprašymas}}
+\begin{DoxyItemize}
+\item push\+\_\+back() Prideda naują elementą į vektoriaus galą. Jei vektoriuje nėra laisvos vietos, funkcija naują taplą padidina 2 kartus.
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keywordtype}{void}\ push\_back(\textcolor{keyword}{const}\ T\&\ value)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{if}(size\_\ <\ capacity\_)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data\_[size\_]\ =\ value;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ size\_++;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ capacity\_\ =\ (capacity\_\ ==\ 0)\ ?\ 1\ :\ capacity\_\ *\ 2;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T\ *newdata\_\ =\ \textcolor{keyword}{new}\ T[capacity\_];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{for}\ (\textcolor{keywordtype}{size\_t}\ i\ =\ 0;\ i\ <\ size\_;\ i++)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newdata\_[i]\ =\ data\_[i];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newdata\_[size\_]\ =\ value;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ size\_++;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keyword}{delete}[]\ data\_;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data\_\ =\ newdata\_;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\`{}\`{}\`{}\`{}\`{}}
+\DoxyCodeLine{*\ reverse()}
+\DoxyCodeLine{Rankinis\ atminties\ rezervavimas.}
+\DoxyCodeLine{Jei\ new\_cap\ didesnis\ už\ esamą\ talpą,\ išskiriamas\ naujas,\ didesnis\ atminties\ blokas,\ į\ kurį\ perkeliami\ esami\ elementai,\ o\ senoji\ atmintis\ atlaisvinama.}
+
+\end{DoxyCode}
+ cpp void reserve(size\+\_\+type new\+\_\+cap) \{ if (new\+\_\+cap \texorpdfstring{$>$}{>} capacity\+\_\+) \{ T\texorpdfstring{$\ast$}{*} newdata = new T\+[new\+\_\+cap]\+; for (size\+\_\+t i = 0; i \texorpdfstring{$<$}{<} size\+\_\+; i++) newdata\+[i]\+ = std::\+move(data\+\_\+\+[i]\+); delete\+[]\+ data\+\_\+; data\+\_\+ = newdata; capacity\+\_\+ = new\+\_\+cap; \} \} 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{*\ shrink\_to\_fit()}
+\DoxyCodeLine{Atlaisvina\ nenaudojamą\ rezervuotą\ atmintį,\ suvienodindama\ talpą\ su\ esamu\ elementų\ kiekiu.}
+\DoxyCodeLine{}
+\DoxyCodeLine{\`{}\`{}\`{}\`{}cpp}
+\DoxyCodeLine{void\ shrink\_to\_fit()}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ if\ (capacity\_\ >\ size\_)\ }
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ T*\ newdata\_\ =\ new\ T[size\_];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ for\ (size\_type\ i\ =\ 0;\ i\ <\ size\_;\ ++i)\ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ newdata\_[i]\ =\ std::move(data\_[i]);}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ delete[]\ data\_;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ data\_\ =\ newdata\_;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ capacity\_\ =\ size\_;}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+
+\end{DoxyCode}
+
+
+
+\begin{DoxyItemize}
+\item operator\+[]\+ Grąžina nuorodą į elementą vektoriuje.
+\end{DoxyItemize}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{T\&\ operator[](\textcolor{keywordtype}{size\_t}\ index)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \{}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{keywordflow}{return}\ data\_[index];}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \}}
+\DoxyCodeLine{\`{}\`{}\`{}\`{}\`{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{*\ insert()}
+\DoxyCodeLine{Įterpia\ naują\ elementą\ į\ nurodytą\ poziciją.\ Visi\ elementai\ nuo\ nurodytos\ pozicijos\ iki\ galo\ pastumiami\ viena\ vieta\ į\ dešinę,\ o\ laisvoje\ vietoje\ įrašoma\ nauja\ reikšmė.}
+
+\end{DoxyCode}
+ cpp void insert(size\+\_\+t index, const T\& value) \{ if (index \texorpdfstring{$>$}{>} size\+\_\+) throw std::\+out\+\_\+of\+\_\+range("{}\+Insert index out of range"{}); if (size\+\_\+ == capacity\+\_\+) reserve(capacity\+\_\+ == 0 ? 1 :\+ capacity\+\_\+ \texorpdfstring{$\ast$}{*} 2);
+
+for (size\+\_\+t i = size\+\_\+; i \texorpdfstring{$>$}{>} index; --i) \{ data\+\_\+\+[i]\+ = std::\+move(data\+\_\+\+[i -\/ 1]\+); \} data\+\_\+\+[index]\+ = value; size\+\_\+++; \} \`{}\`{}\`{}\`{}\`{} 
