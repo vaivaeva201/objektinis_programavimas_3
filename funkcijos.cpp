@@ -174,9 +174,14 @@ string pasirinkimas ()
     std:: ifstream fd;
     while (true)
     {
-        system("ls *.txt");
-        cout<<"Ivesk failo pavadinima: ";
-        cin>>failas;
+        #ifdef _WIN32
+            system("dir *.txt /B"); 
+        #else
+            system("ls *.txt"); 
+        #endif
+
+            cout << "Ivesk failo pavadinima: ";
+            cin >> failas;
 
         try
         {
