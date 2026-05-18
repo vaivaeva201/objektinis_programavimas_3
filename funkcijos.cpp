@@ -1,5 +1,6 @@
 #include "studentas.h"
 #include "vector.h"
+#include "konteineriai.h"
 
 void failu_generavimas(int Studentu_sk)
 {
@@ -608,9 +609,9 @@ void rikiavimas(Vector < Studentas > &grupe)
 
 void meniu(Vector < Studentas > &grupe)
 {
-    int pasirinkimas = 0;
+    int pasirink = 0;
 
-    while(pasirinkimas != 7)
+    while(pasirink != 8)
     {    
         cout << endl;
         cout << "Pasirinkite programos eigą: " << endl;
@@ -621,21 +622,22 @@ void meniu(Vector < Studentas > &grupe)
         cout << "4 - Nuskaityti duomenis iš failo;" << endl;
         cout << "5 - Testuoti programą;" << endl;
         cout << "6 - Testuoti klasę;" << endl;
-        cout << "7 - Baigti darbą;" << endl;
+        cout << "7 - Strategijų testas;" << endl;
+        cout << "8 - Baigti darbą;" << endl;
         cout << endl;
 
         while (true)
         { 
             try
             {
-                cin >> pasirinkimas;   
+                cin >> pasirink;   
                     if(cin.fail() || cin.peek() != '\n')
                     {
                         cin.clear();
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         throw std::invalid_argument("Įvedėte ne skaičių.");
                     }
-                    if(pasirinkimas < 1 ||  pasirinkimas > 7)
+                    if(pasirink < 1 ||  pasirink > 8)
                         throw std::out_of_range("Neteisingas pasirinkimas! Prašau įveskite vieną iš duotų variantų.");
                     break;
                 }
@@ -649,7 +651,7 @@ void meniu(Vector < Studentas > &grupe)
                 }
         }
 
-        switch(pasirinkimas)
+        switch(pasirink)
         {
             case 1:
                 cout << "Pasirinkote viską įvesti ranka " << endl;
@@ -855,6 +857,123 @@ void meniu(Vector < Studentas > &grupe)
                 break;
             }
             case 7:
+            {
+                cout << "Pasirinkote testuoti strategijas " << endl;
+                cout << "-----------------------------------------------------------" << endl;
+                int pasirink = 0;
+
+                cout << "Pasirinkite kokia strategija norite testuoti: " << endl;
+                cout << "-----------------------------------------------------------" << endl;
+                cout << "1 - Pirma strategija;" << endl;
+                cout << "2 - Antra strategija;" << endl;
+                cout << "3 - Trecia strategija;" << endl;
+                cout << endl;
+
+                while (true)
+                { 
+                    try
+                    {
+                        cin >> pasirink;   
+                            if(cin.fail() || cin.peek() != '\n')
+                            {
+                                cin.clear();
+                                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                                throw std::invalid_argument("Įvedėte ne skaičių.");
+                            }
+                            if(pasirink < 1 ||  pasirink > 3)
+                                throw std::out_of_range("Neteisingas pasirinkimas! Prašau įveskite vieną iš duotų variantų.");
+                            break;
+                        }
+                        catch(const std::invalid_argument& e)
+                        {
+                            std::cerr << e.what() << " Įveskite dar kartą: " << endl;
+                        }
+                        catch(const std::out_of_range& e)
+                        {
+                            std::cerr << e.what() << " Įveskite dar kartą: " << endl;
+                        }
+                }
+
+                switch(pasirink)
+                {
+                    case 1:
+                        {
+
+                            Vector < Studentas > studentai_v;
+                            list < Studentas > studentai_l;
+                            deque < Studentas > studentai_d;
+
+                            cout << "Pirmos strategijos testavimas " << endl;
+                            cout << "-----------------------------------------------------------" << endl;
+
+                            string failas = pasirinkimas();
+                            double vektoriaus_laik;
+                            double list_laik;
+                            double deque_laik;
+
+                            cout << endl;
+                            cout << "Rezultatai: " << endl;
+                            cout << "-----------------------------------------------------------" << endl;
+                            strategiju_tyrimas(failas, studentai_v, "vekor");
+                            strategiju_tyrimas(failas, studentai_l, "list");
+                            strategiju_tyrimas(failas, studentai_d, "deque");
+
+                            break;
+                        }
+                    case 2:
+                    {
+                {
+
+                    Vector < Studentas > studentai_v;
+                    list < Studentas > studentai_l;
+                    deque < Studentas > studentai_d;
+
+                    cout << "Antros strategijos testavimas " << endl;
+                    cout << "-----------------------------------------------------------" << endl;
+
+                    string failas = pasirinkimas();
+                    double vektoriaus_laik;
+                    double list_laik;
+                    double deque_laik;
+
+                    cout << endl;
+                    cout << "Rezultatai: " << endl;
+                    cout << "-----------------------------------------------------------" << endl;
+                    strategijos_du_tyrimas(failas, studentai_v, "vekor");
+                    strategijos_du_tyrimas(failas, studentai_l, "list");
+                    strategijos_du_tyrimas(failas, studentai_d, "deque");
+
+                     break;
+                    }
+                    }    
+                    case 3:
+                        {
+                            Vector < Studentas > studentai_v;
+                            list < Studentas > studentai_l;
+                            deque < Studentas > studentai_d;
+
+                            cout << "Trečios strategijos testavimas " << endl;
+                            cout << "-----------------------------------------------------------" << endl;
+
+                            string failas = pasirinkimas();
+                            double vektoriaus_laik;
+                            double list_laik;
+                            double deque_laik;
+
+                            cout << endl;
+                            cout << "Rezultatai: " << endl;
+                            cout << "-----------------------------------------------------------" << endl;
+                            strategijos_trys_tyrimas(failas, studentai_v, "vekor");
+                        // strategijos_trys_tyrimas(failas, studentai_l, "list");
+                        // strategijos_trys_tyrimas(failas, studentai_d, "deque");
+                        }
+                    default: 
+                            cout << "Prašau įveskite vieną iš duotų variantų " << endl; 
+
+                }   
+                break;
+            }
+            case 8:
                 cout << "Pasirinkote baigti darbą " << endl;
                 cout << "-----------------------------------------------------------" << endl;
 

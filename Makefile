@@ -1,5 +1,5 @@
 main:
-	g++ pradinis.cpp funkcijos.cpp -o programa
+	g++ -std=c++17 pradinis.cpp funkcijos.cpp -o programa
 	./programa
 
 run0:

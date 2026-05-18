@@ -2,7 +2,7 @@
 #include "konteineriai.h"
 #include "vector.h"
 
-int main(){
+void strategija_1(){
 
     Vector < Studentas > studentai_v;
     list < Studentas > studentai_l;
@@ -23,5 +23,5 @@ int main(){
     strategiju_tyrimas(failas, studentai_l, "list");
     strategiju_tyrimas(failas, studentai_d, "deque");
 
-    return 0;
+    //return 0;
 }

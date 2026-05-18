@@ -152,6 +152,9 @@ bool pagal_med_did(const Studentas &a, const Studentas &b);
 bool pagal_med_maz(const Studentas &a, const Studentas &b);
 void rikiavimas(Vector < Studentas > &grupe);
 void meniu(Vector < Studentas > &grupe);
+void strategija_1();
+void strategija_2();
+void strategija_3();
 
 
 #endif
