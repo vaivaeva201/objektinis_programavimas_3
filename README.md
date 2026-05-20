@@ -133,3 +133,11 @@ void insert(size_t index, const T& value)
             size_++;
         }
 `````
+
+**Pagrindinės programos funkcijos**
+* 1. Įvesti visus studento duomenis ranka;
+* 2. Sugeneruoti atsitiktinius pažymius, bet studento vardą ir pavardę įvesti ranka;
+* 3. Sudenetuoti studento vardą, pavardę ir pažymius;
+* 4. Nuskaityti duomenis iš failo;
+* 5. Testuoti programą;
+* 6. Testuoti tris strategijas;

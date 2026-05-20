@@ -23,5 +23,5 @@ void strategija_1(){
     strategiju_tyrimas(failas, studentai_l, "list");
     strategiju_tyrimas(failas, studentai_d, "deque");
 
-    //return 0;
+  //  return 0;
 }
