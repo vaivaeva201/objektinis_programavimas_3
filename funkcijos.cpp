@@ -616,7 +616,7 @@ void meniu(Vector < Studentas > &grupe)
 {
     int pasirink = 0;
 
-    while(pasirink != 8)
+    while(pasirink != 9)
     {    
         cout << endl;
         cout << "Pasirinkite programos eigą: " << endl;
@@ -628,7 +628,8 @@ void meniu(Vector < Studentas > &grupe)
         cout << "5 - Testuoti programą;" << endl;
         cout << "6 - Testuoti klasę;" << endl;
         cout << "7 - Strategijų testas;" << endl;
-        cout << "8 - Baigti darbą;" << endl;
+        cout << "8 - Sugeneruoti failus;" << endl;
+        cout << "9 - Baigti darbą;" << endl;
         cout << endl;
 
         while (true)
@@ -642,7 +643,7 @@ void meniu(Vector < Studentas > &grupe)
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         throw std::invalid_argument("Įvedėte ne skaičių.");
                     }
-                    if(pasirink < 1 ||  pasirink > 8)
+                    if(pasirink < 1 ||  pasirink > 9)
                         throw std::out_of_range("Neteisingas pasirinkimas! Prašau įveskite vieną iš duotų variantų.");
                     break;
                 }
@@ -751,7 +752,7 @@ void meniu(Vector < Studentas > &grupe)
                 //failu_generavimas(10000);
                 //failu_generavimas(100000);
                 //failu_generavimas(1000000);
-                failu_generavimas(10000000);
+                //failu_generavimas(10000000);
                 Vector<int> dydziai = {1000, 10000, 100000, 1000000, 10000000};
                 for (auto x : dydziai) {
                     cout << "Testas su " << x << " įrašų: " << endl;
@@ -979,6 +980,33 @@ void meniu(Vector < Studentas > &grupe)
                 break;
             }
             case 8:
+            {
+                cout << "Pasirinkote generuoti failą " << endl;
+                cout << "-----------------------------------------------------------" << endl;
+                int stud_sk;
+                cout << "Įveskite norimo failo dydį (studentų skaičių faile): ";
+                while (true)
+                {   
+                    cin >> stud_sk;
+
+                    if (cin.fail() || cin.peek() != '\n')
+                    {
+                        cin.clear();
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        std::cerr << "Įvedėte ne skaičių. Įveskite dar kartą: " << endl;
+                    }
+                    else
+                    {
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                        break;
+                    }
+                }
+                failu_generavimas(stud_sk);
+
+                break;
+            }
+
+            case 9:
                 cout << "Pasirinkote baigti darbą " << endl;
                 cout << "-----------------------------------------------------------" << endl;
 
